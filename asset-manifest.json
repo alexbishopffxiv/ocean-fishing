@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/ocean-fishing/static/css/main.5ed1e958.chunk.css",
+    "main.js": "/ocean-fishing/static/js/main.60a7fac8.chunk.js",
+    "main.js.map": "/ocean-fishing/static/js/main.60a7fac8.chunk.js.map",
+    "runtime-main.js": "/ocean-fishing/static/js/runtime-main.7a2c33f6.js",
+    "runtime-main.js.map": "/ocean-fishing/static/js/runtime-main.7a2c33f6.js.map",
+    "static/js/2.f109a0a9.chunk.js": "/ocean-fishing/static/js/2.f109a0a9.chunk.js",
+    "static/js/2.f109a0a9.chunk.js.map": "/ocean-fishing/static/js/2.f109a0a9.chunk.js.map",
+    "index.html": "/ocean-fishing/index.html",
+    "static/css/main.5ed1e958.chunk.css.map": "/ocean-fishing/static/css/main.5ed1e958.chunk.css.map",
+    "static/js/2.f109a0a9.chunk.js.LICENSE.txt": "/ocean-fishing/static/js/2.f109a0a9.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7a2c33f6.js",
+    "static/js/2.f109a0a9.chunk.js",
+    "static/css/main.5ed1e958.chunk.css",
+    "static/js/main.60a7fac8.chunk.js"
+  ]
+}

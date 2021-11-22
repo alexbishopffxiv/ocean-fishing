@@ -1,0 +1,2 @@
+(this["webpackJsonpocean-fishing"]=this["webpackJsonpocean-fishing"]||[]).push([[0],{11:function(n,e,t){"use strict";t.r(e);var c=t(0),i=t.n(c),o=t(3),s=t.n(o),r=(t(8),t(9),t(1));var a=function(){return Object(r.jsx)("div",{className:"App",children:"Hello world!"})};s.a.render(Object(r.jsx)(i.a.StrictMode,{children:Object(r.jsx)(a,{})}),document.getElementById("root"))},8:function(n,e,t){},9:function(n,e,t){}},[[11,1,2]]]);
+//# sourceMappingURL=main.60a7fac8.chunk.js.map
