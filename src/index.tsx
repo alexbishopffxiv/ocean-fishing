@@ -284,6 +284,13 @@ class App extends React.Component<Props, State> {
     );
   }
 
+  formatCastTime(time: number) {
+    if (Math.floor(time) === time) {
+      return String(time) + ".0";
+    }
+    return String(time);
+  }
+
   render() {
     if (this.isDebug) {
       return this.renderDebug();
@@ -293,7 +300,9 @@ class App extends React.Component<Props, State> {
     return (
       <div className="App">
         <div className="top">
-          <div className="castTime">{this.state.castTime}</div>
+          <div className="castTime">
+            {this.formatCastTime(this.state.castTime)}
+          </div>
           <div>{this.renderFishGrid(routeInfo)}</div>
         </div>
         <div className="bottom">
