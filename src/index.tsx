@@ -146,6 +146,10 @@ class App extends React.Component<Props, State> {
   }
 
   parseLogLine = ({ rawLine }: { rawLine: string }) => {
+    if (!this.isOceanFishing) {
+      return;
+    }
+
     for (let event in regex) {
       if (regex[event as keyof typeof regex].exec(rawLine)) {
         switch (event) {
@@ -208,7 +212,7 @@ class App extends React.Component<Props, State> {
   };
 
   cast = () => {
-    if (!this.isCastInProgress) {
+    if (!this.isCastInProgress || !this.isOceanFishing) {
       return;
     }
 
