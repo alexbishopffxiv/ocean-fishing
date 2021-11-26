@@ -84,11 +84,12 @@ class App extends React.Component<Props, State> {
   }
 
   getInitialState() {
-    return {
+    const state = {
       castTime: 0,
       routeInfo: this.getCurrentRouteInfo(),
       routeIndex: 0,
     };
+    return state;
   }
 
   componentDidMount() {
@@ -96,8 +97,8 @@ class App extends React.Component<Props, State> {
   }
 
   getRoute() {
-    const anchorDate = new Date("November 25, 2021 8:00:00");
-    const anchorOffset = 4;
+    const anchorDate = new Date("November 25, 2021 00:00:00");
+    const anchorOffset = 44;
 
     let interval = differenceInHours(new Date(), anchorDate);
     // Adjustment to show the upcoming route one hour
