@@ -7,6 +7,29 @@ import { differenceInHours } from "date-fns";
 import { baitData } from "./data/bait";
 import classNames from "classnames";
 
+type OverlayEvent = "ChangeZone" | "LogLine";
+type OverlayCallback = ({
+  zoneID,
+  rawLine,
+}: {
+  zoneID?: number;
+  rawLine?: string;
+}) => void;
+
+declare global {
+  interface Window {
+    addOverlayListener: (
+      eventName: OverlayEvent,
+      callback: OverlayCallback
+    ) => void;
+    removeOverlayListener: (
+      eventName: OverlayEvent,
+      callback: OverlayCallback
+    ) => void;
+    startOverlayEvents: () => void;
+  }
+}
+
 const regex = {
   changeFishingArea:
     /^00\|[^|]*\|[^|]*\|Foerzagyl\|Weigh the anchors! Shove off!\|/,
@@ -119,47 +142,50 @@ class App extends React.Component<Props, State> {
     return result;
   }
 
-  registerListeners() {
-    // https://ngld.github.io/OverlayPlugin/devs/event_types.html
-    // @ts-ignore
-    window.addOverlayListener("LogLine", ({ rawLine }) => {
-      for (let event in regex) {
-        if (regex[event as keyof typeof regex].exec(rawLine)) {
-          switch (event) {
-            case "changeFishingArea":
-              this.setState({ routeIndex: this.state.routeIndex + 1 });
-              break;
-            case "cast":
-              this.isSpectral = rawLine.indexOf("spectral current") !== -1;
-              this.isMooch = false;
-              this.startCast();
-              break;
-            case "mooch":
-              this.isMooch = true;
-              this.startCast();
-              break;
-            case "miss":
-            case "quit":
-            case "bite":
-              this.stopCast();
-              break;
-          }
+  parseLogLine = ({ rawLine }: { rawLine?: string }) => {
+    if (!rawLine) {
+      return;
+    }
+
+    for (let event in regex) {
+      if (regex[event as keyof typeof regex].exec(rawLine)) {
+        switch (event) {
+          case "changeFishingArea":
+            this.setState({ routeIndex: this.state.routeIndex + 1 });
+            break;
+          case "cast":
+            this.isSpectral = rawLine.indexOf("spectral current") !== -1;
+            this.isMooch = false;
+            this.startCast();
+            break;
+          case "mooch":
+            this.isMooch = true;
+            this.startCast();
+            break;
+          case "miss":
+          case "quit":
+          case "bite":
+            this.stopCast();
+            break;
         }
       }
-    });
+    }
+  };
 
-    // @ts-ignore
+  registerListeners() {
+    // https://ngld.github.io/OverlayPlugin/devs/event_types.html
     window.addOverlayListener("ChangeZone", ({ zoneID }) => {
       if (!this.isOceanFishing && zoneID === 900) {
+        window.addOverlayListener("LogLine", this.parseLogLine);
         this.isOceanFishing = true;
         this.setState(this.getInitialState());
       } else if (zoneID !== 900) {
+        window.removeOverlayListener("LogLine", this.parseLogLine);
         this.isOceanFishing = false;
       }
       this.toggleWindow(this.isOceanFishing);
     });
 
-    // @ts-ignore
     window.startOverlayEvents();
   }
 
