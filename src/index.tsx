@@ -7,28 +7,30 @@ import { differenceInHours } from "date-fns";
 import { baitData } from "./data/bait";
 import classNames from "classnames";
 
-type OverlayEvent = "ChangeZone" | "LogLine";
-type OverlayCallback = ({
-  zoneID,
-  rawLine,
-}: {
-  zoneID?: number;
-  rawLine?: string;
-}) => void;
+// START: Define window functions set by FFXIV ACT Plugin
+// Full API: https://ngld.github.io/OverlayPlugin/devs/event_types.html
+type ChangeZoneCallback = ({ zoneID }: { zoneID: number }) => void;
+type LogLineCallback = ({ rawLine }: { rawLine: string }) => void;
+
+interface EventHandlers {
+  ChangeZone: ChangeZoneCallback;
+  LogLine: LogLineCallback;
+}
+
+type EventNames = keyof EventHandlers;
+type OverlayEventListener = <K extends EventNames>(
+  event: K,
+  callback: EventHandlers[K]
+) => void;
 
 declare global {
   interface Window {
-    addOverlayListener: (
-      eventName: OverlayEvent,
-      callback: OverlayCallback
-    ) => void;
-    removeOverlayListener: (
-      eventName: OverlayEvent,
-      callback: OverlayCallback
-    ) => void;
+    addOverlayListener: OverlayEventListener;
+    removeOverlayListener: OverlayEventListener;
     startOverlayEvents: () => void;
   }
 }
+// END: FFXIV ACT Plugin definitions
 
 const regex = {
   changeFishingArea:
@@ -142,11 +144,7 @@ class App extends React.Component<Props, State> {
     return result;
   }
 
-  parseLogLine = ({ rawLine }: { rawLine?: string }) => {
-    if (!rawLine) {
-      return;
-    }
-
+  parseLogLine = ({ rawLine }: { rawLine: string }) => {
     for (let event in regex) {
       if (regex[event as keyof typeof regex].exec(rawLine)) {
         switch (event) {
@@ -173,7 +171,6 @@ class App extends React.Component<Props, State> {
   };
 
   registerListeners() {
-    // https://ngld.github.io/OverlayPlugin/devs/event_types.html
     window.addOverlayListener("ChangeZone", ({ zoneID }) => {
       if (!this.isOceanFishing && zoneID === 900) {
         window.addOverlayListener("LogLine", this.parseLogLine);
