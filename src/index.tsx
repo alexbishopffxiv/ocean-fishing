@@ -171,13 +171,12 @@ class App extends React.Component<Props, State> {
   };
 
   registerListeners() {
+    window.addOverlayListener("LogLine", this.parseLogLine);
     window.addOverlayListener("ChangeZone", ({ zoneID }) => {
       if (!this.isOceanFishing && zoneID === 900) {
-        window.addOverlayListener("LogLine", this.parseLogLine);
         this.isOceanFishing = true;
         this.setState(this.getInitialState());
       } else if (zoneID !== 900) {
-        window.removeOverlayListener("LogLine", this.parseLogLine);
         this.isOceanFishing = false;
       }
       this.toggleWindow(this.isOceanFishing);
