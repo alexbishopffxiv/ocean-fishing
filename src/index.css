@@ -2,17 +2,14 @@ html,
 body {
   background: transparent;
   margin: 0;
-}
-
-body {
-  padding: 5px;
-}
-
-body {
   font-family: "Outfit", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: transparent;
+}
+
+body.isHidden {
+  display: none;
 }
 
 .App {
@@ -23,8 +20,7 @@ body {
   overflow: hidden;
   font-weight: normal;
   box-sizing: border-box;
-  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
-    0 1px 5px 0 rgb(0 0 0 / 12%);
+  border: 2px solid black;
 }
 
 .top {
@@ -50,7 +46,7 @@ body {
 }
 
 .fishName {
-  width: 160px;
+  width: 200px;
 }
 
 .fishTug {

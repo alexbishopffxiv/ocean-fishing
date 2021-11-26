@@ -29,7 +29,6 @@ interface Props {}
 
 interface State {
   castTime: number;
-  isOceanFishing: boolean;
   routeInfo: RouteInfo[];
   routeIndex: number;
 }
@@ -40,6 +39,7 @@ class App extends React.Component<Props, State> {
   isMooch: boolean;
   isDebug: boolean;
   isSpectral: boolean;
+  isOceanFishing: boolean;
 
   constructor(props: Props) {
     super(props);
@@ -47,16 +47,26 @@ class App extends React.Component<Props, State> {
     this.castStartTime = 0;
     this.isMooch = false;
     this.isSpectral = false;
+    this.isOceanFishing = false;
     this.isDebug =
       new URLSearchParams(window.location.search).get("debug") !== null;
 
     this.state = {
       castTime: 0,
-      isOceanFishing: false,
       routeInfo: this.getCurrentRouteInfo(),
       routeIndex: 0,
     };
+  }
 
+  getInitialState() {
+    return {
+      castTime: 0,
+      routeInfo: this.getCurrentRouteInfo(),
+      routeIndex: 0,
+    };
+  }
+
+  componentDidMount() {
     this.registerListeners();
   }
 
@@ -140,11 +150,25 @@ class App extends React.Component<Props, State> {
 
     // @ts-ignore
     window.addOverlayListener("ChangeZone", ({ zoneID }) => {
-      this.setState({ isOceanFishing: zoneID === 384 });
+      if (!this.isOceanFishing && zoneID === 900) {
+        this.isOceanFishing = true;
+        this.setState(this.getInitialState());
+      } else if (zoneID !== 900) {
+        this.isOceanFishing = false;
+      }
+      this.toggleWindow(this.isOceanFishing);
     });
 
     // @ts-ignore
     window.startOverlayEvents();
+  }
+
+  toggleWindow(isVisible: boolean) {
+    if (isVisible) {
+      document.body.classList.remove("isHidden");
+    } else {
+      document.body.classList.add("isHidden");
+    }
   }
 
   startCast = () => {
@@ -173,6 +197,7 @@ class App extends React.Component<Props, State> {
   };
 
   renderDebug() {
+    this.toggleWindow(true);
     const routes = Object.keys(fishData) as (keyof typeof fishData)[];
     const result = [];
     for (const route of routes) {
@@ -227,7 +252,10 @@ class App extends React.Component<Props, State> {
               })()}
             </div>
             <div className="fishPoints">{f.maxDh * f.points}</div>
-            <div className="fishName">{f.name}</div>
+            <div className="fishName">
+              {f.name}
+              {f.isMooch ? "*" : ""}
+            </div>
           </div>
         ))}
       </div>
@@ -237,10 +265,6 @@ class App extends React.Component<Props, State> {
   render() {
     if (this.isDebug) {
       return this.renderDebug();
-    }
-
-    if (!this.state.isOceanFishing) {
-      return <div></div>;
     }
 
     const routeInfo = this.state.routeInfo[this.state.routeIndex];
