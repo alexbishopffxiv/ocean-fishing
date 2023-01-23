@@ -278,7 +278,9 @@ class App extends React.Component<Props, State> {
                 return `${f.minTime}-${f.maxTime}`;
               })()}
             </div>
-            <div className="fishPoints">{(f.maxDh - 1) * 2 * f.points * 2}</div>
+            <div className="fishPoints">
+              {((f.maxDh - 1) * 2 + 1) * f.points * 2}
+            </div>
             <div className="fishName">
               {f.name}
               {f.isMooch ? "*" : ""}
