@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/ocean-fishing/static/css/main.e51d6b07.chunk.css",
-    "main.js": "/ocean-fishing/static/js/main.601ba5b0.chunk.js",
-    "main.js.map": "/ocean-fishing/static/js/main.601ba5b0.chunk.js.map",
-    "runtime-main.js": "/ocean-fishing/static/js/runtime-main.7a2c33f6.js",
-    "runtime-main.js.map": "/ocean-fishing/static/js/runtime-main.7a2c33f6.js.map",
-    "static/js/2.bd28590c.chunk.js": "/ocean-fishing/static/js/2.bd28590c.chunk.js",
-    "static/js/2.bd28590c.chunk.js.map": "/ocean-fishing/static/js/2.bd28590c.chunk.js.map",
+    "main.js": "/ocean-fishing/static/js/main.90ee49d4.chunk.js",
+    "main.js.map": "/ocean-fishing/static/js/main.90ee49d4.chunk.js.map",
+    "runtime-main.js": "/ocean-fishing/static/js/runtime-main.11ad55ae.js",
+    "runtime-main.js.map": "/ocean-fishing/static/js/runtime-main.11ad55ae.js.map",
+    "static/js/2.5284b403.chunk.js": "/ocean-fishing/static/js/2.5284b403.chunk.js",
+    "static/js/2.5284b403.chunk.js.map": "/ocean-fishing/static/js/2.5284b403.chunk.js.map",
     "index.html": "/ocean-fishing/index.html",
     "static/css/main.e51d6b07.chunk.css.map": "/ocean-fishing/static/css/main.e51d6b07.chunk.css.map",
-    "static/js/2.bd28590c.chunk.js.LICENSE.txt": "/ocean-fishing/static/js/2.bd28590c.chunk.js.LICENSE.txt"
+    "static/js/2.5284b403.chunk.js.LICENSE.txt": "/ocean-fishing/static/js/2.5284b403.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.7a2c33f6.js",
-    "static/js/2.bd28590c.chunk.js",
+    "static/js/runtime-main.11ad55ae.js",
+    "static/js/2.5284b403.chunk.js",
     "static/css/main.e51d6b07.chunk.css",
-    "static/js/main.601ba5b0.chunk.js"
+    "static/js/main.90ee49d4.chunk.js"
   ]
 }
